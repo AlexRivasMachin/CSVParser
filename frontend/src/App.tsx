@@ -2,7 +2,7 @@ import { useState } from 'react';
 import './App.css'
 import { handleUpload } from './services/upload';
 import { Toaster, toast } from 'sonner';
-
+import {type Data } from './types';
 
 const APP_STATUS = {
   IDLE: 'IDLE', //base
@@ -19,7 +19,7 @@ function App() {
 
   const [appStatus, setAppStatus] = useState<AppStatusType>(APP_STATUS.IDLE);
   const [file, setFile] = useState<File | null>(null);
-  const [data, setData] = useState<string | null>(null);
+  const [data, setData] = useState<Data>([]);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const [file] = event.target.files ?? [];
@@ -30,7 +30,7 @@ function App() {
     }
   }
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault() //para que al hacer el submit no recargue la página
     if (appStatus !== APP_STATUS.READY_TO_UPLOAD || !file) {
       return;
@@ -38,20 +38,19 @@ function App() {
 
     setAppStatus(APP_STATUS.LOADING);
 
-    handleUpload(file)
-      .then(([error, newData]) => {
-        if (error) {
-          setAppStatus(APP_STATUS.ERROR);
-          return;
-        }
-
-        setAppStatus(APP_STATUS.SUCCESS);
-        if (newData) {
-          setData(newData);
-          setAppStatus(APP_STATUS.READY_TO_SEARCH);
-          toast.success('File uploaded successfully');
-        }
-      });
+    const [error, newData] = await handleUpload(file);
+    if (error) {
+      setAppStatus(APP_STATUS.ERROR);
+      toast.error('Error uploading file');
+      return;
+    }
+    setAppStatus(APP_STATUS.SUCCESS);
+    if (newData) {
+      console.log(newData);
+      setData(newData);
+      setAppStatus(APP_STATUS.READY_TO_SEARCH);
+      toast.success('File uploaded successfully');
+    }
   }
 
   const showButtom = appStatus === APP_STATUS.READY_TO_UPLOAD || appStatus === APP_STATUS.LOADING;

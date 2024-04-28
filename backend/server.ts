@@ -34,7 +34,7 @@ app.post('/api/files', upload.single('file') ,async (req, res) => {
     try{
         const csv = Buffer.from(file.buffer).toString('utf-8'); // si usanmos el convertCsvToJson, es any, por tanto hacemos este paso por el tipado
         //convertimos el resultado a CSV
-        const json = convertCsvToJson.getJsonFromCsv(csv);
+        const json = convertCsvToJson.fieldDelimiter(',').getJsonFromCsv(csv);
         data = json;
     }catch(err){
         return res.status(400).json({message: 'Invalid file type, use CSV'});
