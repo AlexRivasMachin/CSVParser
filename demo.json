@@ -1,0 +1,72 @@
+[
+    {
+        "id": 1,
+        "Nombre": "Juan Fernandez",
+        "Edad": 32,
+        "Departamento": "Ventas",
+        "Email": "juan@empresa.com"
+    },
+    {
+        "id": 2,
+        "Nombre": "Ana Diaz",
+        "Edad": 28,
+        "Departamento": "Marketing",
+        "Email": "ana@empresa.com"
+    },
+    {
+        "id": 3,
+        "Nombre": "Pedro Sanchez",
+        "Edad": 45,
+        "Departamento": "IT",
+        "Email": "pedro@empresa.com"
+    },
+    {
+        "id": 4,
+        "Nombre": "Maria Aleluya",
+        "Edad": 37,
+        "Departamento": "Recursos Humanos",
+        "Email": "maria@empresa.com"
+    },
+    {
+        "id": 5,
+        "Nombre": "Carlos Sobera",
+        "Edad": 29,
+        "Departamento": "Finanzas",
+        "Email": "carlos@empresa.com"
+    },
+    {
+        "id": 6,
+        "Nombre": "Lucia Luminosa",
+        "Edad": 33,
+        "Departamento": "Ventas",
+        "Email": "lucia@empresa.com"
+    },
+    {
+        "id": 7,
+        "Nombre": "David Suarez",
+        "Edad": 40,
+        "Departamento": "Marketing",
+        "Email": "david@empresa.com"
+    },
+    {
+        "id": 8,
+        "Nombre": "Sofia Baitua",
+        "Edad": 35,
+        "Departamento": "IT",
+        "Email": "sofia@empresa.com"
+    },
+    {
+        "id": 9,
+        "Nombre": "Jose Ignacio",
+        "Edad": 38,
+        "Departamento": "Recursos Humanos",
+        "Email": "jose@empresa.com"
+    },
+    {
+        "id": 10,
+        "Nombre": "Laura Escanes",
+        "Edad": 31,
+        "Departamento": "Finanzas",
+        "Email": "laura@empresa.com"
+    }
+]
