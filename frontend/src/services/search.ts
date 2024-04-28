@@ -1,9 +1,10 @@
 import {type ApiSearchResponse, type Data } from '../types';
+import { API_HOST } from '../config';
 
 export const searchData = async (search: string): Promise<[Error | null , Data?]> => {
     
     try {
-        const response = await fetch(`http://localhost:3000/api/users?q=${search}`)
+        const response = await fetch(`${API_HOST}/api/users?q=${search}`)
 
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);

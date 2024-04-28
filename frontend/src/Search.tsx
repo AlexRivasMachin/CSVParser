@@ -2,11 +2,18 @@ import { useEffect, useState } from "react";
 import { Data } from "./types"
 import { toast } from "sonner";
 import { searchData } from "./services/search";
+import { useDebounce } from '@uidotdev/usehooks';
 
 export const Search = ({initialData } : {initialData : Data}) => {
 
+    const DEBOUNCE_TIME = 300;
     const [data, setData] = useState<Data>(initialData);
-    const [search, setSearch] = useState<string>('');
+    const [search, setSearch] = useState<string>(()=>{
+        const searchParams = new URLSearchParams(window.location.search);
+        return searchParams.get('q') || ''; // si no hay query param, devuelve un string vacío, es decir con la url bien puesta, ya van filtradosº
+    });
+
+    const debouncedSearch = useDebounce(search, DEBOUNCE_TIME);
 
     const handleSearch = async (event: React.FormEvent<HTMLInputElement>) => {
         setSearch(event.currentTarget.value);
@@ -15,17 +22,17 @@ export const Search = ({initialData } : {initialData : Data}) => {
     useEffect(() => {
         const pathName = search == ''
             ? window.location.pathname
-            : `?q=${search}`; // si no hay nada en search, se queda en la misma página, si hay algo, se añade el query param
+            : `?q=${debouncedSearch}`; // si no hay nada en search, se queda en la misma página, si hay algo, se añade el query param
             
         window.history.replaceState({}, '', pathName);
-    }), [search];
+    }), [debouncedSearch];
 
     useEffect(() => {
-        if(!search || search == ""){
+        if(!debouncedSearch || debouncedSearch == ""){
             setData(initialData);
             return;
         }
-        searchData(search)
+        searchData(debouncedSearch)
             .then(([error, newData]) => {
                 if (error) {
                     console.error(error);
@@ -34,7 +41,7 @@ export const Search = ({initialData } : {initialData : Data}) => {
                 }
                 if (newData) setData(newData);
             });
-    }, [search, initialData]);
+    }, [debouncedSearch, initialData]);
 
     return (
         <>
@@ -45,6 +52,7 @@ export const Search = ({initialData } : {initialData : Data}) => {
                     onChange={handleSearch} 
                     type="search" 
                     placeholder="Search Information"
+                    defaultValue={debouncedSearch}
                 />
                 <ul>
                     {data.map((record) => (
