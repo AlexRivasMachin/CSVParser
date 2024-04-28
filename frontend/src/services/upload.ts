@@ -8,7 +8,7 @@ export const handleUpload = async (file: File): Promise<[Error | null , Data?]> 
     formData.append('file', file);
     
     try {
-        const response = await fetch(`${API_HOST}/api/files`, {
+        const response = await fetch(`http://localhost:3000/api/files`, {
             method: 'POST',
             body: formData
         });
