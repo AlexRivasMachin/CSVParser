@@ -3,6 +3,7 @@ import './App.css'
 import { handleUpload } from './services/upload';
 import { Toaster, toast } from 'sonner';
 import {type Data } from './types';
+import { Search } from './Search';
 
 const APP_STATUS = {
   IDLE: 'IDLE', //base
@@ -32,6 +33,7 @@ function App() {
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault() //para que al hacer el submit no recargue la página
+
     if (appStatus !== APP_STATUS.READY_TO_UPLOAD || !file) {
       return;
     }
@@ -39,26 +41,33 @@ function App() {
     setAppStatus(APP_STATUS.LOADING);
 
     const [error, newData] = await handleUpload(file);
+
     if (error) {
       setAppStatus(APP_STATUS.ERROR);
       toast.error('Error uploading file');
       return;
     }
+
     setAppStatus(APP_STATUS.SUCCESS);
+
     if (newData) {
       console.log(newData);
       setData(newData);
-      setAppStatus(APP_STATUS.READY_TO_SEARCH);
       toast.success('File uploaded successfully');
+      setAppStatus(APP_STATUS.READY_TO_SEARCH);
     }
+
+    console.log(data);
   }
 
   const showButtom = appStatus === APP_STATUS.READY_TO_UPLOAD || appStatus === APP_STATUS.LOADING;
+  const showInput = appStatus === APP_STATUS.IDLE;
 
   return (
     <>
       <Toaster />
       <h3> Upload your CSV and search</h3>
+      {showInput && <p>Upload your CSV file</p>}
       <form onSubmit={handleSubmit}>
         <label>   
           <input 
@@ -77,6 +86,12 @@ function App() {
         )}
 
       </form> 
+
+      {
+        appStatus === APP_STATUS.READY_TO_SEARCH && (
+          <Search initialData={data}/>
+        )
+      }
     </>
   )
 }
