@@ -3,6 +3,7 @@ import { Data } from "./types"
 import { toast } from "sonner";
 import { searchData } from "./services/search";
 import { useDebounce } from '@uidotdev/usehooks';
+import './Search.css'
 
 export const Search = ({initialData } : {initialData : Data}) => {
 
@@ -45,27 +46,28 @@ export const Search = ({initialData } : {initialData : Data}) => {
 
     return (
         <>
-            <h3> Search</h3>
-                <div>
-                <p>Search:</p>
+        <div className="searchZone">
+            <div className="searchInput">
+                <h3> Search</h3>
                 <input 
                     onChange={handleSearch} 
                     type="search" 
                     placeholder="Search Information"
                     defaultValue={debouncedSearch}
                 />
-                <ul>
-                    {data.map((record) => (
-                        <li key={record.id}>
-                            <article>
-                                {Object.entries(record).map(([key, value]) => (
-                                        <p key={key}><strong>{key}:</strong>{value}</p>
-                                ))}
-                            </article>
-                        </li>
-                    ))}
-                </ul>
             </div>
+            <ul className="searchData">
+                {data.map((record) => (
+                    <li key={record.id}>
+                        <article>
+                            {Object.entries(record).map(([key, value]) => (
+                                    <p key={key}><strong>{key}:</strong>{value}</p>
+                            ))}
+                        </article>
+                    </li>
+                ))}
+            </ul>
+        </div>
         </>
     )
 }

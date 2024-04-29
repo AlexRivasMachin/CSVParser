@@ -65,6 +65,13 @@ function App() {
 
   return (
     <>
+        <h1><span style={{color : '#ff7b00'}}>CSV</span>Parser</h1>
+        <div className="links">
+            <a href="https://github.com/AlexRivasMachin" target='_blank'>Github</a>
+            <a href="https://www.linkedin.com/in/alex-rivas-machin/" target='_blank'>Linkedin</a>
+            <a href="https://alexdev.eus/" target='_blank'>Portfolio</a>
+        </div>
+    <div className="inputZone">
       <Toaster />
       <h3> Upload your CSV and search</h3>
       {showInput && <p>Upload your CSV file</p>}
@@ -86,7 +93,7 @@ function App() {
         )}
 
       </form> 
-
+    </div>
       {
         appStatus === APP_STATUS.READY_TO_SEARCH && (
           <Search initialData={data}/>

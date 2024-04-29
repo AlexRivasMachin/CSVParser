@@ -1,5 +1,5 @@
 import {type ApiSearchResponse, type Data } from '../types';
-import { API_HOST } from '../config';
+//import { API_HOST } from '../config';
 
 export const searchData = async (search: string): Promise<[Error | null , Data?]> => {
     
