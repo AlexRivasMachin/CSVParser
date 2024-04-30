@@ -73,8 +73,13 @@ function App() {
         </div>
     <div className="inputZone">
       <Toaster />
-      <h3> Upload your CSV and search</h3>
-      {showInput && <p>Upload your CSV file</p>}
+      
+      <h3> Upload your CSV file and search</h3>
+      <p id='demo'>
+        Download the demo file:
+        <a href='/demo.csv' download> Demo.csv</a>
+      </p>
+      {showInput && <h4>Upload your CSV file</h4>}
       <form onSubmit={handleSubmit}>
         <label>   
           <input 
